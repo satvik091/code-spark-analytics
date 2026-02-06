@@ -9,6 +9,7 @@ interface Message {
   content: string;
 }
 
+
 const findStudentInfo = (query: string): string => {
   const q = query.toLowerCase();
 
