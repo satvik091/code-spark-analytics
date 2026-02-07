@@ -1,5 +1,6 @@
 import { Student, ClusterSummary } from "./types";
 
+
 const generateCommitHistory = (base: number) => {
   const data = [];
   for (let i = 29; i >= 0; i--) {
