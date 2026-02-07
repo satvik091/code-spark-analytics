@@ -35,3 +35,4 @@ const ClusterChart = () => (
 );
 
 export default ClusterChart;
+
