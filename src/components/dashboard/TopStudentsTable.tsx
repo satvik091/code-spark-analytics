@@ -4,6 +4,7 @@ import CpiGauge from "./CpiGauge";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 
+
 const clusterVariant = (c: string) =>
   c === "Advanced" ? "default" : c === "Intermediate" ? "secondary" : "outline";
 
