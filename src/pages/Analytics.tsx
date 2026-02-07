@@ -14,6 +14,7 @@ const Analytics = () => {
     }, {})
   ).map(([name, d]) => ({ name, avgSolved: Math.round(d.solved / d.count), avgCommits: Math.round(d.commits / d.count) }));
 
+  
   // Scatter data
   const scatterData = students.map((s) => ({
     name: s.name,
