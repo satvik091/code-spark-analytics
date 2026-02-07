@@ -29,3 +29,4 @@ const StatCard = ({ title, value, subtitle, icon: Icon, trend }: StatCardProps) 
 );
 
 export default StatCard;
+
