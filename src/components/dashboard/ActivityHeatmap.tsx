@@ -16,6 +16,7 @@ const ActivityHeatmap = () => {
   });
   const data = Object.values(aggregated).sort((a, b) => a.date.localeCompare(b.date)).slice(-14);
 
+  
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <h3 className="text-sm font-semibold text-foreground mb-1">Campus Activity</h3>
