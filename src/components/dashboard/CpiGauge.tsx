@@ -36,3 +36,4 @@ const CpiGauge = ({ value, size = "md" }: CpiGaugeProps) => {
 };
 
 export default CpiGauge;
+
