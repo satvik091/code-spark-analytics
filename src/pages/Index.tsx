@@ -6,6 +6,7 @@ import TopStudentsTable from "@/components/dashboard/TopStudentsTable";
 import { students } from "@/lib/mock-data";
 import { Users, Code2, GitCommitHorizontal, Trophy } from "lucide-react";
 
+
 const Index = () => {
   const totalSolved = students.reduce((a, s) => a + s.leetcode.totalSolved, 0);
   const totalCommits = students.reduce((a, s) => a + s.github.totalCommits, 0);
