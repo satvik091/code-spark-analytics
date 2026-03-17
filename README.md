@@ -1,38 +1,30 @@
-# ⚡ Code Spark Analytics
+# ⚡ CodePulse – Smart Academic Analytics Platform
 
-🔗 **Live Demo:** https://cheerful-treacle-6b6b63.netlify.app/  
-📦 **GitHub Repo:** https://github.com/satvik091/code-spark-analytics  
+🔗 **Live Demo:** https://code-spark-analytics.lovable.app
 
 ---
 
 ## 🧠 Overview
 
-**Code Spark Analytics** is a scalable data analytics platform built using **Apache Spark** to process and analyze large-scale datasets efficiently.
-
-The project demonstrates how distributed computing can be leveraged to:
-- Process high-volume data
-- Perform fast transformations
-- Generate actionable insights
+**CodePulse** is a smart academic analytics platform for colleges that tracks real-time student progress using their **LeetCode** and **GitHub** activity. Faculty can monitor learning patterns, evaluate performance, and make data-driven decisions. The system includes intelligent student clustering and a personalized AI chatbot.
 
 ---
 
 ## 🎯 Problem Statement
 
-Traditional data processing tools struggle with:
-- Large datasets (GBs–TBs)
-- Slow computation
-- Memory limitations
-
-👉 This project solves it using **Spark’s distributed architecture**
+- Tracking coding progress manually is difficult for colleges
+- Faculty lack objective metrics to evaluate student coding skills
+- Skill gaps are identified too late in the semester
+- No centralized system to compare student performance
 
 ---
 
 ## 💡 Solution
 
-- ⚡ Uses **PySpark** for parallel data processing  
-- 🔄 Implements optimized data pipelines  
-- 📊 Performs aggregation, filtering, and transformations  
-- 📈 Generates insights from raw datasets  
+- ⚡ **Real-Time Progress Tracking** – Automated pipelines fetch LeetCode submissions and GitHub commits
+- 🧠 **Skill-Based Student Clustering** – ML algorithms group students into Beginner, Intermediate, and Advanced clusters
+- 📊 **Coding Performance Index (CPI)** – Combined score using problems solved, difficulty distribution, commit frequency, and consistency
+- 🤖 **AI Chatbot** – Personalized chatbot answers student-specific queries based on coding profiles
 
 ---
 
@@ -40,118 +32,71 @@ Traditional data processing tools struggle with:
 
 | Category        | Technology |
 |----------------|-----------|
-| Language        | Python |
-| Framework       | Apache Spark (PySpark) |
-| Data Handling   | Pandas |
-| Visualization   | Matplotlib / Seaborn |
-| Deployment      | Netlify (Frontend Demo) |
-| Environment     | Jupyter Notebook / Scripts |
+| Frontend        | React, TypeScript, Vite |
+| Styling         | Tailwind CSS, shadcn/ui |
+| Charts          | Recharts |
+| Routing         | React Router |
+| State           | React Hooks |
+| Icons           | Lucide React |
 
 ---
 
 ## 📂 Project Structure
 
 ```
-code-spark-analytics/
-│── data/              # Input datasets
-│── notebooks/         # Exploratory analysis
-│── scripts/           # Spark processing scripts
-│── output/            # Results & processed data
-│── requirements.txt
-│── README.md
+src/
+├── components/
+│   ├── dashboard/       # StatCard, CpiGauge, ClusterChart, ActivityHeatmap, TopStudentsTable
+│   ├── layout/          # DashboardLayout, Sidebar
+│   └── ui/              # shadcn/ui components
+├── lib/
+│   ├── types.ts         # TypeScript interfaces
+│   ├── mock-data.ts     # Sample student data
+│   └── utils.ts         # Utility functions
+├── pages/
+│   ├── Index.tsx         # Dashboard overview
+│   ├── Students.tsx      # Student listing with search & filters
+│   ├── StudentDetail.tsx # Individual student profile
+│   ├── Analytics.tsx     # Department analytics & clustering
+│   └── Chatbot.tsx       # AI chatbot interface
+└── App.tsx               # Router configuration
 ```
 
 ---
 
 ## 🚀 Key Features
 
-- ⚡ Distributed data processing using Spark  
-- 📊 Data cleaning & transformation pipelines  
-- 📈 Analytical insights generation  
-- 🔁 Scalable architecture for big data  
-- 🧠 Efficient memory utilization  
-
----
-
-## 📸 Demo Preview
-
-> Add screenshots here (VERY IMPORTANT for recruiters)
-
-```
-![Dashboard Screenshot](assets/demo.png)
-```
+- 📊 **Dashboard** – Overview stats, activity heatmap, cluster distribution, top performers
+- 👥 **Student Management** – Searchable/filterable student list with cluster badges
+- 👤 **Student Profiles** – LeetCode difficulty breakdown, GitHub language distribution, activity timeline
+- 📈 **Analytics** – Department comparisons, performance scatter plots, cluster analysis
+- 🤖 **AI Chatbot** – Query student performance by name (e.g., "How is Aarav Sharma doing?")
 
 ---
 
 ## ⚙️ Installation & Setup
 
-### 1️⃣ Clone Repository
 ```bash
-git clone https://github.com/satvik091/code-spark-analytics.git
+# Clone the repository
+git clone <YOUR_GIT_URL>
 cd code-spark-analytics
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
-
-### 2️⃣ Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3️⃣ Run Spark Job
-```bash
-spark-submit scripts/main.py
-```
-
-### 4️⃣ Run Notebook (Optional)
-```bash
-jupyter notebook
-```
-
----
-
-## 📊 Sample Use Cases
-
-- 📌 Log analytics  
-- 📌 User behavior tracking  
-- 📌 Business intelligence pipelines  
-- 📌 Batch data processing  
-
----
-
-## 🧠 Core Concepts Used
-
-- Spark DataFrames  
-- RDD Transformations  
-- Lazy Evaluation  
-- Distributed Computing  
-- Spark SQL  
-
----
-
-## 📈 Results & Impact
-
-- 🚀 Handles large-scale datasets efficiently  
-- ⚡ Faster processing compared to traditional tools  
-- 📊 Generates meaningful business insights  
 
 ---
 
 ## 🔮 Future Enhancements
 
-- 🔴 Real-time analytics using Spark Streaming  
-- ☁️ Cloud integration (AWS / GCP)  
-- 📊 Interactive dashboard (Streamlit / Power BI)  
-- 🤖 AI-powered insights  
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repo  
-2. Create a feature branch  
-3. Commit changes  
-4. Open a Pull Request  
+- 🔴 Live LeetCode & GitHub API integration
+- 🔐 Faculty authentication & role-based access
+- 🤖 AI-powered chatbot with LangChain / Gemini
+- ☁️ Backend with database for persistent student data
+- 📱 Mobile-responsive sidebar
 
 ---
 
@@ -159,7 +104,7 @@ Contributions are welcome!
 
 **Satvik Gupta**  
 🎓 B.Tech CSE (AI/ML)  
-🔗 GitHub: https://github.com/satvik091  
+🔗 GitHub: https://github.com/satvik091
 
 ---
 
