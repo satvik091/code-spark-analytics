@@ -1,6 +1,6 @@
 # ⚡ CodePulse – Smart Academic Analytics Platform
 
-🔗 **Live Demo:** https://code-spark-analytics.lovable.app
+🔗 **Live Demo:** https://cheerful-treacle-6b6b63.netlify.app/
 
 ---
 
