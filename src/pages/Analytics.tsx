@@ -1,9 +1,26 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { students, clusterSummaries } from "@/lib/mock-data";
+import { useStudents, useClusterSummaries } from "@/hooks/useStudents";
+import { Skeleton } from "@/components/ui/skeleton";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, ScatterChart, Scatter, CartesianGrid, Cell } from "recharts";
 
 const Analytics = () => {
-  // Department breakdown
+  const { data: students = [], isLoading } = useStudents();
+  const clusterSummaries = useClusterSummaries(students);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="px-8 py-8 space-y-6">
+          <Skeleton className="h-8 w-48" />
+          <div className="grid grid-cols-2 gap-4">
+            <Skeleton className="h-72" />
+            <Skeleton className="h-72" />
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   const deptData = Object.entries(
     students.reduce<Record<string, { solved: number; commits: number; count: number }>>((acc, s) => {
       if (!acc[s.department]) acc[s.department] = { solved: 0, commits: 0, count: 0 };
@@ -14,8 +31,6 @@ const Analytics = () => {
     }, {})
   ).map(([name, d]) => ({ name, avgSolved: Math.round(d.solved / d.count), avgCommits: Math.round(d.commits / d.count) }));
 
-  
-  // Scatter data
   const scatterData = students.map((s) => ({
     name: s.name,
     x: s.leetcode.totalSolved,
@@ -26,7 +41,6 @@ const Analytics = () => {
 
   const clusterColors: Record<string, string> = { Advanced: "hsl(152,60%,50%)", Intermediate: "hsl(210,80%,55%)", Beginner: "hsl(38,92%,50%)" };
 
-  // CPI distribution
   const cpiRanges = [
     { range: "0-20", count: students.filter(s => s.cpi <= 20).length },
     { range: "21-40", count: students.filter(s => s.cpi > 20 && s.cpi <= 40).length },
@@ -44,7 +58,6 @@ const Analytics = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {/* Department comparison */}
           <div className="rounded-xl border border-border bg-card p-5">
             <h3 className="text-sm font-semibold text-foreground mb-1">Department Comparison</h3>
             <p className="text-xs text-muted-foreground mb-4">Average per student</p>
@@ -59,7 +72,6 @@ const Analytics = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* CPI Distribution */}
           <div className="rounded-xl border border-border bg-card p-5">
             <h3 className="text-sm font-semibold text-foreground mb-1">CPI Distribution</h3>
             <p className="text-xs text-muted-foreground mb-4">Score ranges</p>
@@ -74,7 +86,6 @@ const Analytics = () => {
           </div>
         </div>
 
-        {/* Scatter */}
         <div className="rounded-xl border border-border bg-card p-5">
           <h3 className="text-sm font-semibold text-foreground mb-1">Performance Scatter</h3>
           <p className="text-xs text-muted-foreground mb-4">LeetCode solved vs GitHub commits (colored by cluster)</p>
@@ -84,9 +95,6 @@ const Analytics = () => {
               <XAxis dataKey="x" name="LeetCode Solved" tick={{ fontSize: 10, fill: "hsl(215,12%,50%)" }} axisLine={false} tickLine={false} />
               <YAxis dataKey="y" name="GitHub Commits" tick={{ fontSize: 10, fill: "hsl(215,12%,50%)" }} axisLine={false} tickLine={false} width={45} />
               <Tooltip
-                contentStyle={{ background: "hsl(220,18%,9%)", border: "1px solid hsl(220,14%,14%)", borderRadius: "8px", fontSize: "12px", color: "hsl(210,20%,92%)" }}
-                formatter={(value: number, name: string) => [value, name]}
-                labelFormatter={() => ""}
                 content={({ payload }) => {
                   if (!payload?.length) return null;
                   const d = payload[0].payload;
