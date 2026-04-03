@@ -1,14 +1,29 @@
 import { useParams, Link } from "react-router-dom";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { students } from "@/lib/mock-data";
+import { useStudent } from "@/hooks/useStudents";
 import CpiGauge from "@/components/dashboard/CpiGauge";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Github, Code2, Flame, Star, GitPullRequest, FolderGit2 } from "lucide-react";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, PieChart, Pie, Cell } from "recharts";
 
 const StudentDetail = () => {
   const { id } = useParams();
-  const student = students.find((s) => s.id === id);
+  const { data: student, isLoading } = useStudent(id || "");
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="px-8 py-8 space-y-6">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-20 w-full" />
+          <div className="grid grid-cols-6 gap-3">
+            {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-24" />)}
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   if (!student) {
     return (
@@ -27,12 +42,10 @@ const StudentDetail = () => {
   return (
     <DashboardLayout>
       <div className="px-8 py-8">
-        {/* Back */}
         <Link to="/students" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground mb-6 transition-colors">
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Students
         </Link>
 
-        {/* Header */}
         <div className="flex items-center gap-6 mb-8">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-accent-foreground font-bold text-xl">
             {student.name.split(" ").map(n => n[0]).join("")}
@@ -54,7 +67,6 @@ const StudentDetail = () => {
           </Badge>
         </div>
 
-        {/* Stats row */}
         <div className="grid grid-cols-6 gap-3 mb-6">
           {[
             { icon: Code2, label: "Problems Solved", value: student.leetcode.totalSolved },
@@ -72,9 +84,7 @@ const StudentDetail = () => {
           ))}
         </div>
 
-        {/* Charts */}
         <div className="grid grid-cols-3 gap-4 mb-6">
-          {/* Commit History */}
           <div className="col-span-2 rounded-xl border border-border bg-card p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">GitHub Commit History</h3>
             <ResponsiveContainer width="100%" height={200}>
@@ -93,7 +103,6 @@ const StudentDetail = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* Difficulty Pie */}
           <div className="rounded-xl border border-border bg-card p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Problem Difficulty</h3>
             <ResponsiveContainer width="100%" height={140}>
@@ -115,7 +124,6 @@ const StudentDetail = () => {
           </div>
         </div>
 
-        {/* LeetCode submissions + Languages */}
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-xl border border-border bg-card p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">LeetCode Submissions (14 days)</h3>
@@ -152,4 +160,3 @@ const StudentDetail = () => {
 };
 
 export default StudentDetail;
-

@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { students } from "@/lib/mock-data";
 import CpiGauge from "./CpiGauge";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
-
+import type { Student } from "@/lib/types";
 
 const clusterVariant = (c: string) =>
   c === "Advanced" ? "default" : c === "Intermediate" ? "secondary" : "outline";
 
-const TopStudentsTable = () => {
+const TopStudentsTable = ({ students }: { students: Student[] }) => {
   const sorted = [...students].sort((a, b) => b.cpi - a.cpi);
 
   return (

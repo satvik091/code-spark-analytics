@@ -1,19 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { students } from "@/lib/mock-data";
+import { useStudents } from "@/hooks/useStudents";
 import { Send, Bot, User, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import type { Student } from "@/lib/types";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-
-const findStudentInfo = (query: string): string => {
+const findStudentInfo = (query: string, students: Student[]): string => {
   const q = query.toLowerCase();
 
-  // Find student by name
   const student = students.find((s) =>
     q.includes(s.name.toLowerCase()) || q.includes(s.githubUsername.toLowerCase()) || q.includes(s.leetcodeUsername.toLowerCase())
   );
@@ -36,7 +35,6 @@ const findStudentInfo = (query: string): string => {
     return `**${student.name}** — CPI: ${student.cpi} | Cluster: ${student.cluster}\n\nLeetCode: ${student.leetcode.totalSolved} solved | GitHub: ${student.github.totalCommits} commits\n\nAsk about their LeetCode stats, GitHub activity, progress, or ranking for more details!`;
   }
 
-  // General queries
   if (q.includes("top") || q.includes("best") || q.includes("leaderboard")) {
     const top3 = [...students].sort((a, b) => b.cpi - a.cpi).slice(0, 3);
     return `🏆 **Top 3 Students by CPI:**\n\n${top3.map((s, i) => `${i + 1}. **${s.name}** — CPI: ${s.cpi} | ${s.leetcode.totalSolved} problems | ${s.github.totalCommits} commits`).join("\n")}`;
@@ -49,10 +47,11 @@ const findStudentInfo = (query: string): string => {
     return `**Student Clusters:**\n\n🟢 **Advanced** (${adv.length}): ${adv.map(s => s.name).join(", ")}\n🔵 **Intermediate** (${mid.length}): ${mid.map(s => s.name).join(", ")}\n🟡 **Beginner** (${beg.length}): ${beg.map(s => s.name).join(", ")}`;
   }
 
-  return `I can help you with student-specific queries! Try asking:\n\n- "How is **Aarav Sharma** doing?"\n- "Show me **Priya Patel**'s LeetCode stats"\n- "What are **Rohan Gupta**'s GitHub commits?"\n- "Who are the **top students**?"\n- "Show me the **cluster** breakdown"`;
+  return `I can help you with student-specific queries! Try asking:\n\n- "How is **Mayank Sharma** doing?"\n- "Show me **Prerita Saini**'s LeetCode stats"\n- "What are **Rahul Gupta**'s GitHub commits?"\n- "Who are the **top students**?"\n- "Show me the **cluster** breakdown"`;
 };
 
 const Chatbot = () => {
+  const { data: students = [] } = useStudents();
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hi! I'm **CodePulse AI** 🤖\n\nI can answer questions about any student's coding profile — LeetCode stats, GitHub activity, CPI scores, rankings, and more.\n\nTry asking about a specific student or request the leaderboard!" },
   ]);
@@ -72,7 +71,7 @@ const Chatbot = () => {
     setIsTyping(true);
 
     setTimeout(() => {
-      const response = findStudentInfo(input);
+      const response = findStudentInfo(input, students);
       setMessages((prev) => [...prev, { role: "assistant", content: response }]);
       setIsTyping(false);
     }, 600);
@@ -81,7 +80,6 @@ const Chatbot = () => {
   return (
     <DashboardLayout>
       <div className="flex flex-col h-screen">
-        {/* Header */}
         <div className="border-b border-border px-8 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
@@ -94,7 +92,6 @@ const Chatbot = () => {
           </div>
         </div>
 
-        {/* Messages */}
         <div className="flex-1 overflow-y-auto px-8 py-6 space-y-4">
           {messages.map((msg, i) => (
             <div key={i} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -136,14 +133,13 @@ const Chatbot = () => {
           <div ref={endRef} />
         </div>
 
-        {/* Input */}
         <div className="border-t border-border px-8 py-4">
           <div className="flex gap-3">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              placeholder="Ask about a student... e.g. 'How is Aarav Sharma doing?'"
+              placeholder="Ask about a student... e.g. 'How is Mayank Sharma doing?'"
               className="flex-1 bg-card border-border"
             />
             <button

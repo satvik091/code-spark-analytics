@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { students } from "@/lib/mock-data";
+import { useStudents } from "@/hooks/useStudents";
 import CpiGauge from "@/components/dashboard/CpiGauge";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Search, Filter } from "lucide-react";
 
 const Students = () => {
+  const { data: students = [], isLoading } = useStudents();
   const [search, setSearch] = useState("");
   const [clusterFilter, setClusterFilter] = useState<string>("All");
 
@@ -17,6 +19,19 @@ const Students = () => {
     return matchSearch && matchCluster;
   });
 
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="px-8 py-8 space-y-6">
+          <Skeleton className="h-8 w-48" />
+          <div className="grid grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((i) => <Skeleton key={i} className="h-48" />)}
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
       <div className="px-8 py-8">
@@ -25,7 +40,6 @@ const Students = () => {
           <p className="text-sm text-muted-foreground mt-1">Browse and filter all tracked students</p>
         </div>
 
-        {/* Filters */}
         <div className="flex items-center gap-3 mb-6">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -47,7 +61,6 @@ const Students = () => {
           </div>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-3 gap-4">
           {filtered.map((s) => (
             <Link key={s.id} to={`/students/${s.id}`} className="group rounded-xl border border-border bg-card p-5 hover:border-primary/20 hover:shadow-[var(--shadow-glow)] transition-all">
@@ -90,4 +103,3 @@ const Students = () => {
 };
 
 export default Students;
-
