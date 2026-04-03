@@ -14,7 +14,87 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      students: {
+        Row: {
+          avatar_url: string | null
+          cluster: string
+          cpi: number
+          created_at: string
+          department: string
+          email: string
+          github_languages: Json | null
+          github_total_commits: number | null
+          github_total_prs: number | null
+          github_total_repos: number | null
+          github_total_stars: number | null
+          github_username: string
+          id: string
+          last_refreshed_at: string | null
+          leetcode_easy: number | null
+          leetcode_hard: number | null
+          leetcode_medium: number | null
+          leetcode_ranking: number | null
+          leetcode_streak: number | null
+          leetcode_total_solved: number | null
+          leetcode_username: string
+          name: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          avatar_url?: string | null
+          cluster?: string
+          cpi?: number
+          created_at?: string
+          department?: string
+          email: string
+          github_languages?: Json | null
+          github_total_commits?: number | null
+          github_total_prs?: number | null
+          github_total_repos?: number | null
+          github_total_stars?: number | null
+          github_username: string
+          id?: string
+          last_refreshed_at?: string | null
+          leetcode_easy?: number | null
+          leetcode_hard?: number | null
+          leetcode_medium?: number | null
+          leetcode_ranking?: number | null
+          leetcode_streak?: number | null
+          leetcode_total_solved?: number | null
+          leetcode_username: string
+          name: string
+          updated_at?: string
+          year?: number
+        }
+        Update: {
+          avatar_url?: string | null
+          cluster?: string
+          cpi?: number
+          created_at?: string
+          department?: string
+          email?: string
+          github_languages?: Json | null
+          github_total_commits?: number | null
+          github_total_prs?: number | null
+          github_total_repos?: number | null
+          github_total_stars?: number | null
+          github_username?: string
+          id?: string
+          last_refreshed_at?: string | null
+          leetcode_easy?: number | null
+          leetcode_hard?: number | null
+          leetcode_medium?: number | null
+          leetcode_ranking?: number | null
+          leetcode_streak?: number | null
+          leetcode_total_solved?: number | null
+          leetcode_username?: string
+          name?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
